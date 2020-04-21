@@ -23,6 +23,7 @@ alias ls='ls -G'
 alias ll='ls -l -G'
 alias vi='vim'
 alias grep='grep --color=auto'
+alias refreshbash='. ~/.bash_profile'
 
 # gradle specific build commands
 alias gbuildclean='./gradlew clean --refresh-dependencies'
@@ -37,10 +38,10 @@ alias uncommit='git reset --soft HEAD~1'
 alias squash='git commit -a -m "tmp";git rebase -i '
 
 ####### WORK SPECIFIC COMMANDS #####
-alias dbconnect='ssh -i ~/.ssh/gpu -N -L 3309:$(aws rds describe-db-clusters --query DBClusters[0].Endpoint --output text):3306 darragh@$(aws ec2 describe-instances --filters "Name=tag-value,Values=bastion" "Name=instance-state-code,Values=16" --query "Reservations[0].Instances[0].PublicDnsName" --output text)'
-alias dbread='ssh -i ~/.ssh/gpu -N -L 3309:$(aws rds describe-db-clusters --query DBClusters[0].ReaderEndpoint --output text):3306 darragh@$(aws ec2 describe-instances --filters "Name=tag-value,Values=bastion" "Name=instance-state-code,Values=16" --query "Reservations[0].Instances[0].PublicDnsName" --output text)'
+alias dbconnect='echo "Do not forget to use VPN"; ssh -o ConnectTimeout=1 -i ~/.ssh/gpu -N -L 3309:$(aws rds describe-db-clusters --query DBClusters[0].Endpoint --output text):3306 darragh@$(aws ec2 describe-instances --filters "Name=tag-value,Values=bastion" "Name=instance-state-code,Values=16" --query "Reservations[0].Instances[0].PublicDnsName" --output text);'
+alias dbread='echo "Do not forget to use VPN"; ssh -o ConnectTimeout=1 -i ~/.ssh/gpu -N -L 3309:$(aws rds describe-db-clusters --query DBClusters[0].ReaderEndpoint --output text):3306 darragh@$(aws ec2 describe-instances --filters "Name=tag-value,Values=bastion" "Name=instance-state-code,Values=16" --query "Reservations[0].Instances[0].PublicDnsName" --output text);'
 alias bastion='ssh -i ~/.ssh/gpu darragh@$(aws ec2 describe-instances --filters "Name=tag-value,Values=bastion" "Name=instance-state-code,Values=16" --query "Reservations[0].Instances[0].PublicDnsName" --output text)'
-alias terraform='aws-vault exec terraformer -- terraform' #needed to allow role hopping with MFA
+alias staging-terraform='aws-vault exec staging-terraformer -- terraform' #needed to allow role hopping with MFA
 
 ##### AWS PROFILE HOPPING #####
 
