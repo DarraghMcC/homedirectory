@@ -1,0 +1,10 @@
+alias devdoc='docker-compose -f <PATH_TO_A_DOCKER_FILE>'
+alias portainer='<PATH_TO_PORTAINER_SCRIPT>'
+
+export NVM_DIR=~/.nvm
+source $(brew --prefix nvm)/nvm.sh
+
+export KUBECONFIG=<KUBERNATES_FILES>
+export GOPATH=<GO_PATH_LOCATION>
+export GOBIN=$GOPATH/bin
+export PATH=$PATH:$GOPATH:$GOBIN

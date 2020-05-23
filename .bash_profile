@@ -37,14 +37,14 @@ alias gcommit='git commit -a -m'
 alias uncommit='git reset --soft HEAD~1'
 alias squash='git commit -a -m "tmp";git rebase -i '
 
-####### WORK SPECIFIC COMMANDS #####
+####### AWS COMMANDS #####
 alias dbconnect='echo "Do not forget to use VPN"; ssh -o ConnectTimeout=1 -i ~/.ssh/gpu -N -L 3309:$(aws rds describe-db-clusters --query DBClusters[0].Endpoint --output text):3306 darragh@$(aws ec2 describe-instances --filters "Name=tag-value,Values=bastion" "Name=instance-state-code,Values=16" --query "Reservations[0].Instances[0].PublicDnsName" --output text);'
 alias dbread='echo "Do not forget to use VPN"; ssh -o ConnectTimeout=1 -i ~/.ssh/gpu -N -L 3309:$(aws rds describe-db-clusters --query DBClusters[0].ReaderEndpoint --output text):3306 darragh@$(aws ec2 describe-instances --filters "Name=tag-value,Values=bastion" "Name=instance-state-code,Values=16" --query "Reservations[0].Instances[0].PublicDnsName" --output text);'
 alias bastion='ssh -i ~/.ssh/gpu darragh@$(aws ec2 describe-instances --filters "Name=tag-value,Values=bastion" "Name=instance-state-code,Values=16" --query "Reservations[0].Instances[0].PublicDnsName" --output text)'
 alias staging-terraform='aws-vault exec staging-terraformer -- terraform' #needed to allow role hopping with MFA
+alias sandpit-terraform='aws-vault exec sandpit-developer -- terraform' #needed to allow role hopping with MFA
 
 ##### AWS PROFILE HOPPING #####
-
 awsprof() {
     case "$1" in
         "")
@@ -67,8 +67,14 @@ _awsprof_completions() {
  
 complete -F _awsprof_completions awsprof
 
-
 ####### SYSTEM SPECIFIC COMMANDS #####
 if [ -f $HOME/.bash_profile_local ]; then
     . $HOME/.bash_profile_local
 fi
+
+####### WORK SPECIFIC COMMANDS #####
+if [ -f $HOME/.bash_profile_work ]; then
+    . $HOME/.bash_profile_work
+fi
+
+alias ovpn='networksetup -connectpppoeservice "Office vpn"'
