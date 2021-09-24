@@ -24,6 +24,7 @@ alias ll='ls -l -G'
 alias vi='vim'
 alias grep='grep --color=auto'
 alias refreshbash='. ~/.bash_profile'
+alias golint='golangci-lint run -v --enable-all --disable gochecknoglobals --exclude G107 --disable gomnd'
 
 # gradle specific build commands
 alias gbuildclean='./gradlew clean --refresh-dependencies'
