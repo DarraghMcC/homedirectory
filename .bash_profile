@@ -1,11 +1,12 @@
-# CLI prompt bar info
-parse_git_branch() {
-     git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
-}
+eval "$(/opt/homebrew/bin/brew shellenv)"
 
 if [ -f $(brew --prefix)/etc/bash_completion ]; then 
 . $(brew --prefix)/etc/bash_completion
 fi
+
+parse_git_branch() {
+     git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
+}
 
 source <(kubectl completion bash)
 KUBE_PS1_SYMBOL_COLOR=green
@@ -13,7 +14,7 @@ KUBE_PS1_CTX_COLOR=green
 KUBE_PS1_NS_COLOR=magenta
 KUBE_PS1_BG_COLOR=''
 KUBE_PS1_SYMBOL="⎈"
-source /usr/local/opt/kube-ps1/share/kube-ps1.sh
+source /opt/homebrew/opt/kube-ps1/share/kube-ps1.sh
 PS1='[\u@\h] [\w] [$(parse_git_branch)] $(kube_ps1)\n'
 PS1+='  |--> '
 export PS1
@@ -79,3 +80,5 @@ if [ -f $HOME/.bash_profile_work ]; then
 fi
 
 alias ovpn='networksetup -connectpppoeservice "Office vpn"'
+
+export BASH_SILENCE_DEPRECATION_WARNING=1
